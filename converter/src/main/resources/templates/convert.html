@@ -1,0 +1,214 @@
+<html>
+    <head>
+        <title>converter</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+        <!-- Bootstrap core CSS -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Material Design Bootstrap -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.9/css/mdb.min.css" rel="stylesheet">
+        <!-- JQuery -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <!-- Bootstrap tooltips -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+        <!-- Bootstrap core JavaScript -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <!-- MDB core JavaScript -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.9/js/mdb.min.js"></script>
+        <!--Sweet alert-->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <style type="text/css"> 
+            body {
+                overflow-x: hidden;
+            }
+
+            #sidebar-wrapper {
+                min-height: 100vh;
+                margin-left: -15rem;
+                -webkit-transition: margin .25s ease-out;
+                -moz-transition: margin .25s ease-out;
+                -o-transition: margin .25s ease-out;
+                transition: margin .25s ease-out;
+            }
+
+            #sidebar-wrapper .sidebar-heading {
+                padding: 0.875rem 1.25rem;
+                font-size: 1.2rem;
+            }
+
+            #sidebar-wrapper .list-group {
+                width: 15rem;
+            }
+
+            #page-content-wrapper {
+                min-width: 100vw;
+            }
+
+            #wrapper.toggled #sidebar-wrapper {
+                margin-left: 0;
+            }
+
+            @media (min-width: 768px) {
+                #sidebar-wrapper {
+                    margin-left: 0;
+                }
+
+                #page-content-wrapper {
+                    min-width: 0;
+                    width: 100%;
+                }
+
+                #wrapper.toggled #sidebar-wrapper {
+                    margin-left: -15rem;
+                }
+            }
+            
+        </style>
+    </head>
+
+    <body class="fixed-sn" th:attr="onload='alertSave(\''+${status}+'\')'">
+
+        <div class="d-flex  " id="wrapper">
+            <!-- Sidebar -->
+            <div class="bg-light border-right" id="sidebar-wrapper">
+                <div class="sidebar-heading"><h3 class="font-weight-bold">Converter File</h3></div>
+                    <div class="list-group list-group-flush">
+                        <a href="#" class="list-group-item list-group-item-action bg-light" style="font-size: 20px"><i class="fas fa-file-export"></i> Convert</a>
+                
+                        <a th:href="#" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action bg-light" style="font-size: 20px"><i class="fas fa-plus-square">  </i> Add Client</a>
+            
+                    </div>
+            </div>
+            <!-- /#sidebar-wrapper -->
+
+            <!-- Page Content -->
+            <div id="page-content-wrapper">
+                <nav class="navbar navbar-expand-lg  bg-dark border-bottom  navbar-dark bg-dark sticky-top">
+                    <button class="btn btn-light" id="menu-toggle"><i class="fas fa-bars"></i></button>
+
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </nav>
+                <br>
+                <div class="container">
+                    <div class="card ">
+                        <div class="card-body">                          
+                            <br>
+                            <!-- fill content -->
+                                                    <!--Buka Form-->
+                        <form action="#" th:action="@{/convertSave}" th:object="${convert}" method="POST">
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="inputClient">Client</label>
+                                    <input type="number" class="form-control" th:field="*{convert}" id="convert" name="convert" placeholder="" value="">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="inputFile">Input File</label><br>
+                                    <input type="file" multiple th:field="*{inputFile}" id="inputFile" name="inputFile">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="setDirectory">Set Directory</label><br>
+                                    <input type="file" multiple th:field="*{setDirectory}" id="setDirectory" name="setDirectory">
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success">Convert</button>
+                            </div>
+                            <!--Close Form Input-->
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="container">
+                    <div class="card ">
+                        <div class="card-body"> 
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <!-- Footer -->
+
+
+
+        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <!-- Menu Toggle Script -->
+        <script>
+                                                   $("#menu-toggle").click(function (e) {
+                                                   e.preventDefault();
+                                                   $("#wrapper").toggleClass("toggled");
+                                                   });
+        </script>
+        <script>
+            $(document).ready(function () {
+            $('#myTable').DataTable();
+            });
+        </script>
+        <script type="text/javascript">
+
+/*
+            function getData(id, name, location) {
+            if (id.length > 0) {
+            document.getElementById("id").readOnly = true;
+            } else {
+            document.getElementById("id").readOnly = false;
+            }
+            document.getElementById("id").value = id;
+            document.getElementById("name").value = name;
+            document.getElementById("location").value = location;
+            }
+*/
+
+            function setDeleteAlert(id) {
+            swal({
+            title: "Apakah Anda Yakin?",
+                    text: "Tekan Ok, Jika Anda Yakin Untuk Menghapus Data!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+            }).then((willDelete) => {
+            if (willDelete) {
+            window.location.href = "@/clnDelete(id=${id});
+            }
+            else {
+            swal("Anda Membatalkan Mengahpus Data!");
+            }
+            });
+            }
+
+        </script>
+        <script th:inline="javascript">
+            var show = [[${status}]];
+            if (show == 'berhasil') {
+            swal("Good job!", show, "success");
+            } else if (show == 'gagal') {
+            swal("Oops!", show, "error");
+            }
+        </script>
+    </body>
+    <footer class="page-footer font-small blue">
+
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">© 2019 Copyright:
+            BST
+        </div>
+        <!-- Copyright -->
+    </footer>
+</html>
+
