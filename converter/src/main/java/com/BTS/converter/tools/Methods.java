@@ -336,7 +336,7 @@ public class Methods {
         String last = str.substring(str.length()-1);
         
         String temp = first+""+mid+""+last;
-        System.out.println(temp);
+        System.out.println(temp.toUpperCase());
         return temp;
     }
     
@@ -345,7 +345,7 @@ public class Methods {
         String last = str.substring(str.length()-1);
         
         String temp = mid+""+last;
-        System.out.println(temp);
+        System.out.println(temp.toUpperCase());
         return temp;
     }
     
