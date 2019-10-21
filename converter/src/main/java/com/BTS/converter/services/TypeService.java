@@ -5,9 +5,9 @@
  */
 package com.BTS.converter.services;
 
-import com.BTS.converter.entities.ClientPartner;
-import com.BTS.converter.entities.DetailData;
-import com.BTS.converter.repositories.DetailDataRepository;
+import com.BTS.converter.entities.Parameter;
+import com.BTS.converter.entities.Type;
+import com.BTS.converter.repositories.TypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,24 +16,23 @@ import org.springframework.stereotype.Service;
  * @author Reza
  */
 @Service
-public class DetailDataService {
-    
+public class TypeService {
     @Autowired
-    DetailDataRepository detailRepo;
+    TypeRepository typeRepo;
     
-    public Iterable<DetailData> getAll(){
-        return detailRepo.findAll();
+    public Iterable<Type> getAll(){
+        return typeRepo.findAll();
     }
     
-    public boolean save(DetailData detail){
-        if (detailRepo.save(detail)!=null) {
+    public boolean save(Type tp){
+        if (typeRepo.save(tp)!=null) {
             return true;
         } else {
             return false;
         }
     }
     
-    public DetailData getById(String id){
-        return detailRepo.findById(Integer.parseInt(id)).get();
+    public Type getById(String id){
+        return typeRepo.findById(id).get();
     }
 }

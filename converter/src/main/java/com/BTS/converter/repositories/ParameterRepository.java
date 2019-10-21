@@ -5,10 +5,13 @@
  */
 package com.BTS.converter.repositories;
 
+import com.BTS.converter.entities.Parameter;
+import org.springframework.data.repository.CrudRepository;
+
 /**
  *
  * @author Reza
  */
-public interface ParameterRepository {
+public interface ParameterRepository extends CrudRepository<Parameter, Integer>{
     
 }

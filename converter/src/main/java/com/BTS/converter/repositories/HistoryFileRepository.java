@@ -5,10 +5,13 @@
  */
 package com.BTS.converter.repositories;
 
+import com.BTS.converter.entities.HistoryFile;
+import org.springframework.data.repository.CrudRepository;
+
 /**
  *
  * @author Reza
  */
-public interface HistoryFileRepository {
+public interface HistoryFileRepository extends CrudRepository<HistoryFile, String>{
     
 }

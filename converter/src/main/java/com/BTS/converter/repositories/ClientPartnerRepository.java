@@ -5,10 +5,13 @@
  */
 package com.BTS.converter.repositories;
 
+import com.BTS.converter.entities.ClientPartner;
+import org.springframework.data.repository.CrudRepository;
+
 /**
  *
  * @author Reza
  */
-public interface ClientPartnerRepository {
+public interface ClientPartnerRepository extends CrudRepository<ClientPartner, String>{
     
 }

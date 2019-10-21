@@ -5,10 +5,16 @@
  */
 package com.BTS.converter.repositories;
 
+import com.BTS.converter.entities.DetailData;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
 /**
  *
  * @author Reza
  */
-public interface DetailDataRepository {
-    
+@Repository
+public interface DetailDataRepository extends CrudRepository<DetailData, Integer>{
+     
 }

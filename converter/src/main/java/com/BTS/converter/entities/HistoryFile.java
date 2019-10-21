@@ -31,9 +31,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "HistoryFile.findAll", query = "SELECT h FROM HistoryFile h"),
     @NamedQuery(name = "HistoryFile.findById", query = "SELECT h FROM HistoryFile h WHERE h.id = :id"),
     @NamedQuery(name = "HistoryFile.findByOldPath", query = "SELECT h FROM HistoryFile h WHERE h.oldPath = :oldPath"),
-    @NamedQuery(name = "HistoryFile.findByOldExtension", query = "SELECT h FROM HistoryFile h WHERE h.oldExtension = :oldExtension"),
+    @NamedQuery(name = "HistoryFile.findByOldFilename", query = "SELECT h FROM HistoryFile h WHERE h.oldFilename = :oldFilename"),
     @NamedQuery(name = "HistoryFile.findByNewPath", query = "SELECT h FROM HistoryFile h WHERE h.newPath = :newPath"),
-    @NamedQuery(name = "HistoryFile.findByNewExtension", query = "SELECT h FROM HistoryFile h WHERE h.newExtension = :newExtension")})
+    @NamedQuery(name = "HistoryFile.findByNewFilename", query = "SELECT h FROM HistoryFile h WHERE h.newFilename = :newFilename")})
 public class HistoryFile implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -50,8 +50,8 @@ public class HistoryFile implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 35)
-    @Column(name = "old_extension")
-    private String oldExtension;
+    @Column(name = "old_filename")
+    private String oldFilename;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 35)
@@ -60,8 +60,8 @@ public class HistoryFile implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 35)
-    @Column(name = "new_extension")
-    private String newExtension;
+    @Column(name = "new_filename")
+    private String newFilename;
     @JoinColumn(name = "client", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private ClientPartner client;
@@ -73,12 +73,12 @@ public class HistoryFile implements Serializable {
         this.id = id;
     }
 
-    public HistoryFile(String id, String oldPath, String oldExtension, String newPath, String newExtension) {
+    public HistoryFile(String id, String oldPath, String oldFilename, String newPath, String newFilename) {
         this.id = id;
         this.oldPath = oldPath;
-        this.oldExtension = oldExtension;
+        this.oldFilename = oldFilename;
         this.newPath = newPath;
-        this.newExtension = newExtension;
+        this.newFilename = newFilename;
     }
 
     public String getId() {
@@ -97,12 +97,12 @@ public class HistoryFile implements Serializable {
         this.oldPath = oldPath;
     }
 
-    public String getOldExtension() {
-        return oldExtension;
+    public String getOldFilename() {
+        return oldFilename;
     }
 
-    public void setOldExtension(String oldExtension) {
-        this.oldExtension = oldExtension;
+    public void setOldFilename(String oldFilename) {
+        this.oldFilename = oldFilename;
     }
 
     public String getNewPath() {
@@ -113,12 +113,12 @@ public class HistoryFile implements Serializable {
         this.newPath = newPath;
     }
 
-    public String getNewExtension() {
-        return newExtension;
+    public String getNewFilename() {
+        return newFilename;
     }
 
-    public void setNewExtension(String newExtension) {
-        this.newExtension = newExtension;
+    public void setNewFilename(String newFilename) {
+        this.newFilename = newFilename;
     }
 
     public ClientPartner getClient() {

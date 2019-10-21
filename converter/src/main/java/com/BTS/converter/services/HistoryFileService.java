@@ -6,8 +6,8 @@
 package com.BTS.converter.services;
 
 import com.BTS.converter.entities.ClientPartner;
-import com.BTS.converter.entities.DetailData;
-import com.BTS.converter.repositories.DetailDataRepository;
+import com.BTS.converter.entities.HistoryFile;
+import com.BTS.converter.repositories.HistoryFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,24 +16,23 @@ import org.springframework.stereotype.Service;
  * @author Reza
  */
 @Service
-public class DetailDataService {
-    
+public class HistoryFileService {
     @Autowired
-    DetailDataRepository detailRepo;
+    HistoryFileRepository historyRepo;
     
-    public Iterable<DetailData> getAll(){
-        return detailRepo.findAll();
+    public Iterable<HistoryFile> getAll(){
+        return historyRepo.findAll();
     }
     
-    public boolean save(DetailData detail){
-        if (detailRepo.save(detail)!=null) {
+    public boolean save(HistoryFile history){
+        if (historyRepo.save(history)!=null) {
             return true;
         } else {
             return false;
         }
     }
     
-    public DetailData getById(String id){
-        return detailRepo.findById(Integer.parseInt(id)).get();
+    public HistoryFile getById(String id){
+        return historyRepo.findById(id).get();
     }
 }

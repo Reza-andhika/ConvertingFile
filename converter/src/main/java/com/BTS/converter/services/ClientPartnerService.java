@@ -6,8 +6,7 @@
 package com.BTS.converter.services;
 
 import com.BTS.converter.entities.ClientPartner;
-import com.BTS.converter.entities.DetailData;
-import com.BTS.converter.repositories.DetailDataRepository;
+import com.BTS.converter.repositories.ClientPartnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,24 +15,23 @@ import org.springframework.stereotype.Service;
  * @author Reza
  */
 @Service
-public class DetailDataService {
-    
+public class ClientPartnerService {
     @Autowired
-    DetailDataRepository detailRepo;
+    ClientPartnerRepository clientRepo;
     
-    public Iterable<DetailData> getAll(){
-        return detailRepo.findAll();
+    public Iterable<ClientPartner> getAll(){
+        return clientRepo.findAll();
     }
     
-    public boolean save(DetailData detail){
-        if (detailRepo.save(detail)!=null) {
+    public boolean save(ClientPartner client){
+        if (clientRepo.save(client)!=null) {
             return true;
         } else {
             return false;
         }
     }
     
-    public DetailData getById(String id){
-        return detailRepo.findById(Integer.parseInt(id)).get();
+    public ClientPartner getById(String id){
+        return clientRepo.findById(id).get();
     }
 }
