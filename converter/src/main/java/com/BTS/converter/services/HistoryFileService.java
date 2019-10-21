@@ -38,7 +38,7 @@ public class HistoryFileService {
     
     public boolean getByFilename(String OldFilename){
         boolean hasil = false;
-        if(historyRepo.getByFilename(OldFilename).equalsIgnoreCase("")){
+        if(historyRepo.getByFilename(OldFilename).equals("")){
             hasil = true;
         }
         else{

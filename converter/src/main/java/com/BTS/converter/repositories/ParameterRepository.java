@@ -7,11 +7,13 @@ package com.BTS.converter.repositories;
 
 import com.BTS.converter.entities.Parameter;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Reza
  */
+@Repository
 public interface ParameterRepository extends CrudRepository<Parameter, Integer>{
     
 }

@@ -5,15 +5,16 @@
  */
 package com.BTS.converter.repositories;
 
+import com.BTS.converter.entities.DetailData;
 import com.BTS.converter.entities.ClientPartner;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Reza
  */
-public interface ClientPartnerRepository extends CrudRepository<ClientPartner, String>{
-    @Query("select * from tb_m_client_partner where id=?1")
-    public String getById(String id);
+@Repository
+public interface ClientPartnerRepository extends CrudRepository<ClientPartner, String> {
+    
 }

@@ -29,7 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author Reza
  */
-public class Method {
+public class Methods {
 
     @Autowired
     DetailDataService service;
@@ -274,7 +274,7 @@ public class Method {
                 System.out.println("File already exist");
             }
         } catch (IOException ex) {
-            Logger.getLogger(Method.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Methods.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -316,8 +316,52 @@ public class Method {
     
     public HistoryFile saveHistory(String id, String oldpath, String oldfilename, String newpath, String newfilename, String client){
         HistoryFile history = new HistoryFile();
+        ClientPartner clients = new ClientPartner();
+        
+        history.setId(id);
+        history.setOldPath(oldpath);
+        history.setOldFilename(oldfilename);
+        history.setNewPath(newpath);
+        history.setNewFilename(newfilename);
+        
+        clients.setId(client);
+        history.setClient(clients);
         
         return history;
+    }
+    
+    public String id_for_type(String str){
+        String first = str.substring(0,1);
+        String mid = middle(str);
+        String last = str.substring(str.length()-1);
+        
+        String temp = first+""+mid+""+last;
+        System.out.println(temp);
+        return temp;
+    }
+    
+    public String id_for_client(String str){
+        String mid = middle(str);
+        String last = str.substring(str.length()-1);
+        
+        String temp = mid+""+last;
+        System.out.println(temp);
+        return temp;
+    }
+    
+    public static String middle(String str)
+    {
+        int position;
+        int length;
+        
+        if (str.length() % 2 == 0){
+            position = str.length() / 2 - 1;
+            length = 1;
+        }else{
+            position = str.length() / 2;
+            length = 1;
+        }
+        return str.substring(position, position + length);
     }
 
 //

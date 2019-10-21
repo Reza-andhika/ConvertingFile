@@ -15,7 +15,7 @@ import com.BTS.converter.services.DetailDataService;
 import com.BTS.converter.services.HistoryFileService;
 import com.BTS.converter.services.ParameterService;
 import com.BTS.converter.services.TypeService;
-import com.BTS.converter.tools.Method;
+import com.BTS.converter.tools.Methods;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Reza
  */
 @Controller
-public class ConvertController {
+public class ConverterController {
 
     @Autowired
     HistoryFileService historyService;
@@ -52,7 +52,7 @@ public class ConvertController {
     @Autowired
     HttpServletRequest request;
 
-    private Method method;
+    private Methods method;
 
     @RequestMapping("/###")
     public String home() {
@@ -83,6 +83,9 @@ public class ConvertController {
 //        
         if (historyService.getByFilename(OldFilename)) {
             method.readCsvUsingLoad(OldPath, OldFilename, client.getParameter().getSymbol());
+            method.converting(newPath, newFilename);
+            
+            method.saveHistory("isi sesuai kesepakatan", OldPath, OldFilename, newPath, newFilename, clientId);
             
         } else {
             System.out.println("File sudah digunakan");
