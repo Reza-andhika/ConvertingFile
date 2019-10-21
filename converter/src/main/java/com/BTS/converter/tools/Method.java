@@ -5,7 +5,11 @@
  */
 package com.BTS.converter.tools;
 
+import com.BTS.converter.entities.ClientPartner;
 import com.BTS.converter.entities.DetailData;
+import com.BTS.converter.entities.HistoryFile;
+import com.BTS.converter.entities.Parameter;
+import com.BTS.converter.entities.Type;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
@@ -30,9 +34,9 @@ public class Method {
     @Autowired
     DetailDataService service;
 
-    public void readCsvUsingLoad(String path, String delimiter) {
+    public void readCsvUsingLoad(String path, String filename, String delimiter) {
         try (Connection connection = DBConnection.getConnection()) {
-            String loadQuery = "LOAD DATA LOCAL INFILE '" + path + "' INTO TABLE temp FIELDS "
+            String loadQuery = "LOAD DATA LOCAL INFILE '" + path+"/"+filename + "' INTO TABLE temp FIELDS "
                     + "TERMINATED BY '" + delimiter + "'" + " LINES TERMINATED BY '\r\n' (Field_1,\n"
                     + "             Field_2,\n"
                     + "             Field_3,\n"
@@ -278,4 +282,46 @@ public class Method {
         File myfile = new File(path + "/" + fileName);
         myfile.renameTo(new File(path + "/" + fileName + ".NACK"));
     }
+    
+    public ClientPartner clientSave(String id,String name,String parameter,String type){
+        ClientPartner clients = new ClientPartner();
+        Parameter params = new Parameter();
+        Type types = new Type();
+        
+        clients.setId(id);
+        clients.setName(name);
+        
+        params.setId(Integer.parseInt(parameter));
+        clients.setParameter(params);
+        
+        types.setId(type);
+        clients.setType(types);
+        return clients;
+    }
+    
+    public Parameter saveParam(String symbol){
+        Parameter param = new Parameter();
+        
+        param.setSymbol(symbol);
+        return param;
+    }
+    
+    public Type saveType(String id,String name){
+        Type type = new Type();
+        
+        type.setId(id);
+        type.setName(name);
+        return type;
+    }
+    
+    public HistoryFile saveHistory(String id, String oldpath, String oldfilename, String newpath, String newfilename, String client){
+        HistoryFile history = new HistoryFile();
+        
+        return history;
+    }
+
+//
+//    public void readCsvUsingLoad(String OldPath, List<String> delim) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
 }

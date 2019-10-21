@@ -16,8 +16,14 @@ import com.BTS.converter.services.HistoryFileService;
 import com.BTS.converter.services.ParameterService;
 import com.BTS.converter.services.TypeService;
 import com.BTS.converter.tools.Method;
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -43,6 +49,9 @@ public class ConvertController {
     @Autowired
     DetailDataService dataService;
 
+    @Autowired
+    HttpServletRequest request;
+
     private Method method;
 
     @RequestMapping("/###")
@@ -52,21 +61,32 @@ public class ConvertController {
     }
 
     @PostMapping("/###")
-    public String convert(String OldPath, String OldFilename, String newPath, String newFilename) {
-        ClientPartner client = (ClientPartner) clientService.getAll();
-        HistoryFile history = (HistoryFile) historyService.getAll();
-        Type type = (Type) typeService.getAll();
-        Parameter param = (Parameter) paramService.getAll();
-        DetailData data = (DetailData) dataService.getAll();
+    public String convert(Model model, BindingResult bindingResult) {
+        String OldPath = request.getParameter("samakan dengan nama inputan");
+        String OldFilename = request.getParameter("samakan dengan nama inputan");
+        String newPath = request.getParameter("samakan dengan nama inputan");
+        String newFilename = request.getParameter("samakan dengan nama inputan");
+        String clientId = request.getParameter("samakan dengan nama inputan");
 
-        String Cekpath = OldPath + "/" + OldFilename;
-        String equalPath = history.getOldPath() + "/" + history.getOldFilename();
-        if (Cekpath.equalsIgnoreCase(equalPath)) {
+        ///getAll
+        ClientPartner clients = (ClientPartner) clientService.getAll();
+        HistoryFile histories = (HistoryFile) historyService.getAll();
+        Type types = (Type) typeService.getAll();
+        Parameter params = (Parameter) paramService.getAll();
+        DetailData datas = (DetailData) dataService.getAll();
+        
+        ///getById
+        ClientPartner client = (ClientPartner) clientService.getById(clientId);
+        
+//        List<String>delim = new ArrayList<String>();
+//        delim.add(client.getParameter().getSymbol());
+//        
+        if (historyService.getByFilename(OldFilename)) {
+            method.readCsvUsingLoad(OldPath, OldFilename, client.getParameter().getSymbol());
+            
+        } else {
             System.out.println("File sudah digunakan");
             method.renameExtension(OldPath, OldFilename);
-        } else {
-            method.readCsvUsingLoad(OldPath, client.getParameter().getSymbol());
-            
         }
         return "";
     }
