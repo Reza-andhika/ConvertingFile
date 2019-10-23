@@ -7,7 +7,7 @@ package com.BTS.converter.controllers;
 
 import com.BTS.converter.entities.DetailData;
 import com.BTS.converter.entities.Parameter;
-import com.BTS.converter.entities.Type;
+import com.BTS.converter.entities.CorporateType;
 import com.BTS.converter.services.ParameterService;
 import com.BTS.converter.services.TypeService;
 import javax.validation.Valid;
@@ -35,7 +35,7 @@ public class TypeController {
     }
 
     @PostMapping("/typeSave")
-    public String save(Model model, @Valid Type type, BindingResult bindingResult) {
+    public String save(Model model, @Valid CorporateType type, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("types", typeService.getAll());
         }

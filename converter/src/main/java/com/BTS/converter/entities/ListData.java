@@ -9,9 +9,12 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -24,22 +27,22 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Reza
  */
 @Entity
-@Table(name = "tb_tr_detail_data")
+@Table(name = "tb_tr_list_data")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "DetailData.findAll", query = "SELECT d FROM DetailData d"),
-    @NamedQuery(name = "DetailData.findById", query = "SELECT d FROM DetailData d WHERE d.id = :id"),
-    @NamedQuery(name = "DetailData.findByField1", query = "SELECT d FROM DetailData d WHERE d.field1 = :field1"),
-    @NamedQuery(name = "DetailData.findByField2", query = "SELECT d FROM DetailData d WHERE d.field2 = :field2"),
-    @NamedQuery(name = "DetailData.findByField3", query = "SELECT d FROM DetailData d WHERE d.field3 = :field3"),
-    @NamedQuery(name = "DetailData.findByField4", query = "SELECT d FROM DetailData d WHERE d.field4 = :field4"),
-    @NamedQuery(name = "DetailData.findByField5", query = "SELECT d FROM DetailData d WHERE d.field5 = :field5"),
-    @NamedQuery(name = "DetailData.findByField6", query = "SELECT d FROM DetailData d WHERE d.field6 = :field6"),
-    @NamedQuery(name = "DetailData.findByField7", query = "SELECT d FROM DetailData d WHERE d.field7 = :field7"),
-    @NamedQuery(name = "DetailData.findByField8", query = "SELECT d FROM DetailData d WHERE d.field8 = :field8"),
-    @NamedQuery(name = "DetailData.findByField9", query = "SELECT d FROM DetailData d WHERE d.field9 = :field9"),
-    @NamedQuery(name = "DetailData.findByField10", query = "SELECT d FROM DetailData d WHERE d.field10 = :field10")})
-public class DetailData implements Serializable {
+    @NamedQuery(name = "ListData.findAll", query = "SELECT l FROM ListData l"),
+    @NamedQuery(name = "ListData.findById", query = "SELECT l FROM ListData l WHERE l.id = :id"),
+    @NamedQuery(name = "ListData.findByField1", query = "SELECT l FROM ListData l WHERE l.field1 = :field1"),
+    @NamedQuery(name = "ListData.findByField2", query = "SELECT l FROM ListData l WHERE l.field2 = :field2"),
+    @NamedQuery(name = "ListData.findByField3", query = "SELECT l FROM ListData l WHERE l.field3 = :field3"),
+    @NamedQuery(name = "ListData.findByField4", query = "SELECT l FROM ListData l WHERE l.field4 = :field4"),
+    @NamedQuery(name = "ListData.findByField5", query = "SELECT l FROM ListData l WHERE l.field5 = :field5"),
+    @NamedQuery(name = "ListData.findByField6", query = "SELECT l FROM ListData l WHERE l.field6 = :field6"),
+    @NamedQuery(name = "ListData.findByField7", query = "SELECT l FROM ListData l WHERE l.field7 = :field7"),
+    @NamedQuery(name = "ListData.findByField8", query = "SELECT l FROM ListData l WHERE l.field8 = :field8"),
+    @NamedQuery(name = "ListData.findByField9", query = "SELECT l FROM ListData l WHERE l.field9 = :field9"),
+    @NamedQuery(name = "ListData.findByField10", query = "SELECT l FROM ListData l WHERE l.field10 = :field10")})
+public class ListData implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -96,15 +99,18 @@ public class DetailData implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "Field_10")
     private String field10;
+    @JoinColumn(name = "client", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private ClientPartner client;
 
-    public DetailData() {
+    public ListData() {
     }
 
-    public DetailData(Integer id) {
+    public ListData(Integer id) {
         this.id = id;
     }
 
-    public DetailData(Integer id, String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10) {
+    public ListData(Integer id, String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10) {
         this.id = id;
         this.field1 = field1;
         this.field2 = field2;
@@ -206,6 +212,14 @@ public class DetailData implements Serializable {
         this.field10 = field10;
     }
 
+    public ClientPartner getClient() {
+        return client;
+    }
+
+    public void setClient(ClientPartner client) {
+        this.client = client;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -216,10 +230,10 @@ public class DetailData implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof DetailData)) {
+        if (!(object instanceof ListData)) {
             return false;
         }
-        DetailData other = (DetailData) object;
+        ListData other = (ListData) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -228,7 +242,7 @@ public class DetailData implements Serializable {
 
     @Override
     public String toString() {
-        return "com.BTS.converter.entities.DetailData[ id=" + id + " ]";
+        return "com.BTS.converter.entities.ListData[ id=" + id + " ]";
     }
     
 }

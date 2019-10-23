@@ -27,13 +27,13 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Reza
  */
 @Entity
-@Table(name = "tb_m_type")
+@Table(name = "tb_m_corporate_type")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Type.findAll", query = "SELECT t FROM Type t"),
-    @NamedQuery(name = "Type.findById", query = "SELECT t FROM Type t WHERE t.id = :id"),
-    @NamedQuery(name = "Type.findByName", query = "SELECT t FROM Type t WHERE t.name = :name")})
-public class Type implements Serializable {
+    @NamedQuery(name = "CorporateType.findAll", query = "SELECT c FROM CorporateType c"),
+    @NamedQuery(name = "CorporateType.findById", query = "SELECT c FROM CorporateType c WHERE c.id = :id"),
+    @NamedQuery(name = "CorporateType.findByName", query = "SELECT c FROM CorporateType c WHERE c.name = :name")})
+public class CorporateType implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -49,14 +49,14 @@ public class Type implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "type", fetch = FetchType.LAZY)
     private List<ClientPartner> clientPartnerList;
 
-    public Type() {
+    public CorporateType() {
     }
 
-    public Type(String id) {
+    public CorporateType(String id) {
         this.id = id;
     }
 
-    public Type(String id, String name) {
+    public CorporateType(String id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -96,10 +96,10 @@ public class Type implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Type)) {
+        if (!(object instanceof CorporateType)) {
             return false;
         }
-        Type other = (Type) object;
+        CorporateType other = (CorporateType) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -108,7 +108,7 @@ public class Type implements Serializable {
 
     @Override
     public String toString() {
-        return "com.BTS.converter.entities.Type[ id=" + id + " ]";
+        return "com.BTS.converter.entities.CorporateType[ id=" + id + " ]";
     }
     
 }

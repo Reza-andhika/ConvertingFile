@@ -5,15 +5,13 @@
  */
 package com.BTS.converter.repositories;
 
-import com.BTS.converter.entities.Type;
+import com.BTS.converter.entities.CorporateType;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Reza
  */
-@Repository
-public interface TypeRepository extends CrudRepository<Type, String>{
+public interface TypeRepository extends CrudRepository<CorporateType, String>{
     
 }

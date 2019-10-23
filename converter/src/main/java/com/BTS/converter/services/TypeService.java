@@ -6,7 +6,7 @@
 package com.BTS.converter.services;
 
 import com.BTS.converter.entities.Parameter;
-import com.BTS.converter.entities.Type;
+import com.BTS.converter.entities.CorporateType;
 import com.BTS.converter.repositories.TypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,11 +20,11 @@ public class TypeService {
     @Autowired
     TypeRepository typeRepo;
     
-    public Iterable<Type> getAll(){
+    public Iterable<CorporateType> getAll(){
         return typeRepo.findAll();
     }
     
-    public boolean save(Type tp){
+    public boolean save(CorporateType tp){
         if (typeRepo.save(tp)!=null) {
             return true;
         } else {
@@ -32,7 +32,7 @@ public class TypeService {
         }
     }
     
-    public Type getById(String id){
+    public CorporateType getById(String id){
         return typeRepo.findById(id).get();
     }
 }

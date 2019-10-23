@@ -32,8 +32,8 @@ public class HistoryFileService {
         }
     }
     
-    public HistoryFile getById(String id){
-        return historyRepo.findById(id).get();
+    public HistoryFile getById(String filename){
+        return historyRepo.findById(filename).get();
     }
     
     public boolean getByFilename(String OldFilename){

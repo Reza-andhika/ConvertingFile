@@ -9,7 +9,7 @@ import com.BTS.converter.entities.ClientPartner;
 import com.BTS.converter.entities.DetailData;
 import com.BTS.converter.entities.HistoryFile;
 import com.BTS.converter.entities.Parameter;
-import com.BTS.converter.entities.Type;
+import com.BTS.converter.entities.CorporateType;
 import com.BTS.converter.services.ClientPartnerService;
 import com.BTS.converter.services.DetailDataService;
 import com.BTS.converter.services.HistoryFileService;
@@ -62,35 +62,26 @@ public class ConverterController {
 
     @PostMapping("/###")
     public String convert(Model model, BindingResult bindingResult) {
-        String OldPath = request.getParameter("samakan dengan nama inputan");
-        String OldFilename = request.getParameter("samakan dengan nama inputan");
-        String newPath = request.getParameter("samakan dengan nama inputan");
-        String newFilename = request.getParameter("samakan dengan nama inputan");
         String clientId = request.getParameter("samakan dengan nama inputan");
 
         ///getAll
         ClientPartner clients = (ClientPartner) clientService.getAll();
         HistoryFile histories = (HistoryFile) historyService.getAll();
-        Type types = (Type) typeService.getAll();
+        CorporateType types = (CorporateType) typeService.getAll();
         Parameter params = (Parameter) paramService.getAll();
         DetailData datas = (DetailData) dataService.getAll();
-        
+
         ///getById
         ClientPartner client = (ClientPartner) clientService.getById(clientId);
-        
+
 //        List<String>delim = new ArrayList<String>();
 //        delim.add(client.getParameter().getSymbol());
 //        
-        if (historyService.getByFilename(OldFilename)) {
-            method.readCsvUsingLoad(OldPath, OldFilename, client.getParameter().getSymbol());
-            method.converting(newPath, newFilename);
-            
-            method.saveHistory("isi sesuai kesepakatan", OldPath, OldFilename, newPath, newFilename, clientId);
-            
-        } else {
-            System.out.println("File sudah digunakan");
-            method.renameExtension(OldPath, OldFilename);
-        }
+        method.inserts(client.getIncomingPath(), client.getParameter().getSymbol());
+        method.converting(client.getOutgoingPath(), "ganti dengan manipulasi String untuk nama file", clientId);
+
+        method.saveHistory("isi sesuai kesepakatan", client.getIncomingPath(), client.getOutgoingPath(), "penamaan file yang disepakati", clientId);
+
         return "";
     }
 }

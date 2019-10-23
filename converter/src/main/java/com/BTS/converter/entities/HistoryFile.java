@@ -31,7 +31,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "HistoryFile.findAll", query = "SELECT h FROM HistoryFile h"),
     @NamedQuery(name = "HistoryFile.findById", query = "SELECT h FROM HistoryFile h WHERE h.id = :id"),
     @NamedQuery(name = "HistoryFile.findByOldPath", query = "SELECT h FROM HistoryFile h WHERE h.oldPath = :oldPath"),
-    @NamedQuery(name = "HistoryFile.findByOldFilename", query = "SELECT h FROM HistoryFile h WHERE h.oldFilename = :oldFilename"),
     @NamedQuery(name = "HistoryFile.findByNewPath", query = "SELECT h FROM HistoryFile h WHERE h.newPath = :newPath"),
     @NamedQuery(name = "HistoryFile.findByNewFilename", query = "SELECT h FROM HistoryFile h WHERE h.newFilename = :newFilename")})
 public class HistoryFile implements Serializable {
@@ -47,11 +46,6 @@ public class HistoryFile implements Serializable {
     @Size(min = 1, max = 35)
     @Column(name = "old_path")
     private String oldPath;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 35)
-    @Column(name = "old_filename")
-    private String oldFilename;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 35)
@@ -73,10 +67,9 @@ public class HistoryFile implements Serializable {
         this.id = id;
     }
 
-    public HistoryFile(String id, String oldPath, String oldFilename, String newPath, String newFilename) {
+    public HistoryFile(String id, String oldPath, String newPath, String newFilename) {
         this.id = id;
         this.oldPath = oldPath;
-        this.oldFilename = oldFilename;
         this.newPath = newPath;
         this.newFilename = newFilename;
     }
@@ -95,14 +88,6 @@ public class HistoryFile implements Serializable {
 
     public void setOldPath(String oldPath) {
         this.oldPath = oldPath;
-    }
-
-    public String getOldFilename() {
-        return oldFilename;
-    }
-
-    public void setOldFilename(String oldFilename) {
-        this.oldFilename = oldFilename;
     }
 
     public String getNewPath() {

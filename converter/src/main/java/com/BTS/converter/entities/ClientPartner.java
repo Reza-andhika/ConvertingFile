@@ -34,7 +34,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "ClientPartner.findAll", query = "SELECT c FROM ClientPartner c"),
     @NamedQuery(name = "ClientPartner.findById", query = "SELECT c FROM ClientPartner c WHERE c.id = :id"),
-    @NamedQuery(name = "ClientPartner.findByName", query = "SELECT c FROM ClientPartner c WHERE c.name = :name")})
+    @NamedQuery(name = "ClientPartner.findByName", query = "SELECT c FROM ClientPartner c WHERE c.name = :name"),
+    @NamedQuery(name = "ClientPartner.findByIncomingPath", query = "SELECT c FROM ClientPartner c WHERE c.incomingPath = :incomingPath"),
+    @NamedQuery(name = "ClientPartner.findByOutgoingPath", query = "SELECT c FROM ClientPartner c WHERE c.outgoingPath = :outgoingPath")})
 public class ClientPartner implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -48,12 +50,24 @@ public class ClientPartner implements Serializable {
     @Size(min = 1, max = 35)
     @Column(name = "name")
     private String name;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "incoming_path")
+    private String incomingPath;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "outgoing_path")
+    private String outgoingPath;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "client", fetch = FetchType.LAZY)
+    private List<ListData> listDataList;
     @JoinColumn(name = "parameter", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Parameter parameter;
     @JoinColumn(name = "type", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Type type;
+    private CorporateType type;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "client", fetch = FetchType.LAZY)
     private List<HistoryFile> historyFileList;
 
@@ -64,9 +78,11 @@ public class ClientPartner implements Serializable {
         this.id = id;
     }
 
-    public ClientPartner(String id, String name) {
+    public ClientPartner(String id, String name, String incomingPath, String outgoingPath) {
         this.id = id;
         this.name = name;
+        this.incomingPath = incomingPath;
+        this.outgoingPath = outgoingPath;
     }
 
     public String getId() {
@@ -85,6 +101,31 @@ public class ClientPartner implements Serializable {
         this.name = name;
     }
 
+    public String getIncomingPath() {
+        return incomingPath;
+    }
+
+    public void setIncomingPath(String incomingPath) {
+        this.incomingPath = incomingPath;
+    }
+
+    public String getOutgoingPath() {
+        return outgoingPath;
+    }
+
+    public void setOutgoingPath(String outgoingPath) {
+        this.outgoingPath = outgoingPath;
+    }
+
+    @XmlTransient
+    public List<ListData> getListDataList() {
+        return listDataList;
+    }
+
+    public void setListDataList(List<ListData> listDataList) {
+        this.listDataList = listDataList;
+    }
+
     public Parameter getParameter() {
         return parameter;
     }
@@ -93,11 +134,11 @@ public class ClientPartner implements Serializable {
         this.parameter = parameter;
     }
 
-    public Type getType() {
+    public CorporateType getType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public void setType(CorporateType type) {
         this.type = type;
     }
 

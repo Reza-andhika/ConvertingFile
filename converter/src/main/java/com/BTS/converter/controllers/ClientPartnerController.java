@@ -7,7 +7,7 @@ package com.BTS.converter.controllers;
 
 import com.BTS.converter.entities.ClientPartner;
 import com.BTS.converter.entities.Parameter;
-import com.BTS.converter.entities.Type;
+import com.BTS.converter.entities.CorporateType;
 import com.BTS.converter.services.ClientPartnerService;
 import com.BTS.converter.services.TypeService;
 import com.BTS.converter.services.ParameterService;
