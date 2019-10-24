@@ -69,7 +69,7 @@
                     margin-left: -15rem;
                 }
             }
-            
+
         </style>
     </head>
 
@@ -79,12 +79,20 @@
             <!-- Sidebar -->
             <div class="bg-light border-right" id="sidebar-wrapper">
                 <div class="sidebar-heading"><h3 class="font-weight-bold">Converter File</h3></div>
-                    <div class="list-group list-group-flush">
-                        <a href="#" class="list-group-item list-group-item-action bg-light" style="font-size: 20px"><i class="fas fa-file-export"></i> Convert</a>
-                
-                        <a th:href="#" data-toggle="collapse" aria-expanded="false" class="list-group-item list-group-item-action bg-light" style="font-size: 20px"><i class="fas fa-plus-square">  </i> Add Client</a>
-            
-                    </div>
+                <div class="list-group list-group-flush">
+                    <a th:href="@{/home}" class="list-group-item list-group-item-action bg-light" style="font-size: 20px"><i class="fas fa-file-export"></i> Convert</a>
+
+                    <a th:href="@{/clientPartner}" class="list-group-item list-group-item-action bg-light" style="font-size: 20px"><i class="fas fa-plus-square">  </i> Add Client</a>
+
+                    <ul>
+                        <li>
+                            <a th:href="@{/parameter}"  class="list-group-item list-group-item-action bg-light">Parameter</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/type}"  class="list-group-item list-group-item-action bg-light">Type</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <!-- /#sidebar-wrapper -->
 
@@ -93,9 +101,7 @@
                 <nav class="navbar navbar-expand-lg  bg-dark border-bottom  navbar-dark bg-dark sticky-top">
                     <button class="btn btn-light" id="menu-toggle"><i class="fas fa-bars"></i></button>
 
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+
                 </nav>
                 <br>
                 <div class="container">
@@ -103,110 +109,120 @@
                         <div class="card-body">                          
                             <br>
                             <!-- fill content -->
-                                                    <!--Buka Form-->
-                        <form action="#" th:action="@{/convertSave}" th:object="${convert}" method="POST">
-                            <div class="form-row">
-                                <div class="form-group col-md-4">
-                                    <label for="inputInstansi">Instansi</label>
-                                    <input type="number" class="form-control" th:field="*{instansi}" id="instansi" name="convert" placeholder="" value="">
-                                </div>
+                            <!--Buka Form-->
+                            <form action="#" th:action="@{/clientSave}" th:object="${clientPartner}" method="POST">
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="inputInstansi">Instansi</label>
+                                        <select class="form-control" required th:field="*{type}" id="type" name="type"/>
+                                        <option value="">-Pilih-</option>
+                                        <option th:each="t : ${types}" th:value="${t.id}" th:text="${t.name}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-9">
+                                        <label for="inputNama">Nama</label>
+                                        <input type="text" class="form-control" required th:field="*{name}" id="name" name="name" placeholder="" value="">
+                                    </div>
+                                    
+                                    <div class="form-group col-md-4">
+                                        <label for="inputDelimiter">Delimiter</label>
+                                        <select class="form-control" required th:field="*{parameter}" id="parameter" name="parameter"/>
+                                        <option value="">-Pilih-</option>
+                                        <option th:each="p : ${params}" th:value="${p.id}" th:text="${p.symbol}"></option>
+                                        </select>
+                                    </div>
 
-                                <div class="form-group col-md-9">
-                                    <label for="inputNama">Nama</label>
-                                    <input type="text" class="form-control" th:field="*{inputFile}" id="inputFile" name="inputFile" placeholder="" value="">
+                                    <div class="form-group col-md-9">
+                                        <label for="inputNama">incoming</label>
+                                        <input type="text" class="form-control" required th:field="*{incomingPath}" id="name" name="name" placeholder="E:\example\file" value="">
+                                    </div>
+                                    
+                                    <div class="form-group col-md-9">
+                                        <label for="inputNama">outgoing</label>
+                                        <input type="text" class="form-control" required th:field="*{outgoingPath}" id="name" name="name" placeholder="E:\example\file" value="">
+                                    </div>
+                                    
                                 </div>
-                                <div class="form-group col-md-1">
-                                    <label for="setDirectory">Delimiter</label>
-                                    <input type="text" class="form-control" th:field="*{setDirectory}" id="setDirectory" name="setDirectory" placeholder="" value="">
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-success">simpan</button>
                                 </div>
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-success">Convert</button>
-                            </div>
-                            <!--Close Form Input-->
+                                    <!--Close Form Input-->
+                                </div>
                         </div>
                     </div>
+                    <br>
+                  
                 </div>
-                <br>
-              <!--   <div class="container">
-                    <div class="card ">
-                        <div class="card-body"> 
 
-                        </div>
-                    </div>
-                </div> -->
+
             </div>
-
-
-        </div>
-        <!-- Footer -->
+            <!-- Footer -->
 
 
 
-        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-        <!-- Menu Toggle Script -->
-        <script>
-                                                   $("#menu-toggle").click(function (e) {
-                                                   e.preventDefault();
-                                                   $("#wrapper").toggleClass("toggled");
-                                                   });
-        </script>
-        <script>
-            $(document).ready(function () {
-            $('#myTable').DataTable();
-            });
-        </script>
-        <script type="text/javascript">
+            <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+            <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+            <!-- Menu Toggle Script -->
+            <script>
+                $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+                });
+            </script>
+            <script>
+                $(document).ready(function () {
+                $('#myTable').DataTable();
+                });
+            </script>
+            <script type="text/javascript">
 
-/*
-            function getData(id, name, location) {
-            if (id.length > 0) {
-            document.getElementById("id").readOnly = true;
-            } else {
-            document.getElementById("id").readOnly = false;
-            }
-            document.getElementById("id").value = id;
-            document.getElementById("name").value = name;
-            document.getElementById("location").value = location;
-            }
-*/
+                /*
+                 function getData(id, name, location) {
+                 if (id.length > 0) {
+                 document.getElementById("id").readOnly = true;
+                 } else {
+                 document.getElementById("id").readOnly = false;
+                 }
+                 document.getElementById("id").value = id;
+                 document.getElementById("name").value = name;
+                 document.getElementById("location").value = location;
+                 }
+                 */
 
-            function setDeleteAlert(id) {
-            swal({
-            title: "Apakah Anda Yakin?",
-                    text: "Tekan Ok, Jika Anda Yakin Untuk Menghapus Data!",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-            }).then((willDelete) => {
-            if (willDelete) {
-            window.location.href = "@/clnDelete(id=${id});
-            }
-            else {
-            swal("Anda Membatalkan Mengahpus Data!");
-            }
-            });
-            }
+                function setDeleteAlert(id) {
+                swal({
+                title: "Apakah Anda Yakin?",
+                        text: "Tekan Ok, Jika Anda Yakin Untuk Menghapus Data!",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                }).then((willDelete) => {
+                if (willDelete) {
+                window.location.href = "@/clnDelete(id=${id});
+                }
+                else {
+                swal("Anda Membatalkan Mengahpus Data!");
+                }
+                });
+                }
 
-        </script>
-        <script th:inline="javascript">
-            var show = [[${status}]];
-            if (show == 'berhasil') {
-            swal("Good job!", show, "success");
-            } else if (show == 'gagal') {
-            swal("Oops!", show, "error");
-            }
-        </script>
+            </script>
+            <script th:inline="javascript">
+                var show = [[${status}]];
+                if (show == 'berhasil') {
+                swal("Good job!", show, "success");
+                } else if (show == 'gagal') {
+                swal("Oops!", show, "error");
+                }
+            </script>
     </body>
-    <footer class="page-footer font-small blue">
+    <footer class="page-footer font-small bg-light">
 
         <!-- Copyright -->
-        <div class="footer-copyright text-center py-3">© 2019 Copyright:
+        <div class="footer-copyright text-center py-1">© 2019 Copyright:
             BST
         </div>
         <!-- Copyright -->

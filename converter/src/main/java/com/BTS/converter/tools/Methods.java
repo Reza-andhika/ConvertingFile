@@ -28,11 +28,13 @@ import com.BTS.converter.services.ListDataService;
 import java.io.File;
 import javax.swing.event.ListDataEvent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Reza
  */
+@Service
 public class Methods {
 
     @Autowired
@@ -45,6 +47,7 @@ public class Methods {
     ListDataService dataService;
 
     public void converting(String path, String filename, String clientId) {
+        String result = "";
         List<String> temp = new ArrayList<>();
         String a = "";
         String b = "";
@@ -240,6 +243,11 @@ public class Methods {
             }
 
             //////////////////////////////////////////////
+            if (dataRepo.loopId() == null) {
+                listData.setId(1);
+            } else {
+                listData.setId(dataRepo.loopId());
+            }
             listData.setField1(a);
             listData.setField2(b);
             listData.setField3(c);
@@ -259,26 +267,27 @@ public class Methods {
         }
 
         for (ListData listdatas : dataRepo.getByClient(clientId)) {
-            System.out.println("Try -> " + listdatas.getField1() + "_" + listdatas.getField2() + "_"
-                    + listdatas.getField3() + "_"
-                    + listdatas.getField4() + "_"
-                    + listdatas.getField4() + "_"
-                    + listdatas.getField5() + "_"
-                    + listdatas.getField6() + "_"
-                    + listdatas.getField7() + "_"
-                    + listdatas.getField8() + "_"
-                    + listdatas.getField9() + "_"
-                    + listdatas.getField10() + ";");
-            a = listData.getField1();
-            b = listData.getField2();
-            c = listData.getField3();
-            d = listData.getField4();
-            e = listData.getField5();
-            f = listData.getField6();
-            g = listData.getField7();
-            h = listData.getField8();
-            i = listData.getField9();
-            j = listData.getField10();
+
+            a = listdatas.getField1();
+            b = listdatas.getField2();
+            c = listdatas.getField3();
+            d = listdatas.getField4();
+            e = listdatas.getField5();
+            f = listdatas.getField6();
+            g = listdatas.getField7();
+            h = listdatas.getField8();
+            i = listdatas.getField9();
+            j = listdatas.getField10();
+            System.out.println("yg ke dua -> " + listData + "_" + b + "_"
+                    + c + "_"
+                    + d + "_"
+                    + e + "_"
+                    + f + "_"
+                    + g + "_"
+                    + h + "_"
+                    + i + "_"
+                    + j + ";");
+
             if (a.equalsIgnoreCase("")) {
                 a = " ";
                 if (b.equalsIgnoreCase("")) {
@@ -448,16 +457,18 @@ public class Methods {
             temp.add(j + ";");
         }
 
+        System.out.println("isi temp -> " + temp);
         File file = new File(path + "/" + filename);
         File fileDir = new File(path);
         FileWriter fileWriter;
         try {
             if (!fileDir.exists()) {
-                if (fileDir.mkdir()) {
+                if (fileDir.mkdirs()) {
                     System.out.println("Directory is created!");
                     if (file.createNewFile()) {
                         fileWriter = new FileWriter(file);
                         System.out.println("File is created");
+
                         for (String str : temp) {
                             fileWriter.write(str);
                             System.out.print(str);
@@ -480,7 +491,6 @@ public class Methods {
                     }
                     fileWriter.close();
                 } else {
-
                     System.out.println("File already exist");
                 }
             }
@@ -615,7 +625,7 @@ public class Methods {
         return type;
     }
 
-    public HistoryFile saveHistory(String id, String oldpath, String newpath, String newfilename, String client) {
+    public HistoryFile saveHistory(String id, String oldpath, String newpath, String newfilename,String client) {
         HistoryFile history = new HistoryFile();
         ClientPartner clients = new ClientPartner();
 
@@ -637,7 +647,7 @@ public class Methods {
 
         String temp = first + "" + mid + "" + last;
         System.out.println(temp.toUpperCase());
-        return temp;
+        return temp.toUpperCase();
     }
 
     public String id_for_client(String str) {
@@ -646,7 +656,7 @@ public class Methods {
 
         String temp = mid + "" + last;
         System.out.println(temp.toUpperCase());
-        return temp;
+        return temp.toUpperCase();
     }
 
     public static String middle(String str) {

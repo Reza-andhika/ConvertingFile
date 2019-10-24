@@ -20,25 +20,32 @@ import java.util.List;
  */
 @Service
 public class ListDataService {
-    
+
     @Autowired
     ListDataRepository listRepo;
-    
+
     @Autowired
     ClientPartnerRepository clientRepo;
-    
-    public Iterable<ListData> getAll(){
+
+    public Iterable<ListData> getAll() {
         return listRepo.findAll();
     }
-    
+
 //    public List<ListData> getByClientId(String id){
 //        return (List<ListData>) listRepo.findById(Integer.parseInt(id)).get(); 
 //    }
-    public boolean save(ListData datas){
-        if (listRepo.save(datas)!=null) {
-            return true;
+    public boolean save(ListData data) {
+        boolean hasil = false;
+        if (listRepo.save(data) != null) {
+            hasil = true;
         } else {
-            return false;
+            hasil = false;
         }
+        return hasil;
     }
+    
+//    public int loopid(int id){
+//        id = listRepo.loopId(id)+1;
+//        return id;
+//    }
 }

@@ -18,7 +18,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -49,54 +48,34 @@ public class ListData implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @Size(max = 100)
     @Column(name = "Field_1")
     private String field1;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @Size(max = 100)
     @Column(name = "Field_2")
     private String field2;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @Size(max = 100)
     @Column(name = "Field_3")
     private String field3;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @Size(max = 100)
     @Column(name = "Field_4")
     private String field4;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @Size(max = 100)
     @Column(name = "Field_5")
     private String field5;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @Size(max = 100)
     @Column(name = "Field_6")
     private String field6;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @Size(max = 100)
     @Column(name = "Field_7")
     private String field7;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @Size(max = 100)
     @Column(name = "Field_8")
     private String field8;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @Size(max = 100)
     @Column(name = "Field_9")
     private String field9;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @Size(max = 100)
     @Column(name = "Field_10")
     private String field10;
     @JoinColumn(name = "client", referencedColumnName = "id")
@@ -108,20 +87,6 @@ public class ListData implements Serializable {
 
     public ListData(Integer id) {
         this.id = id;
-    }
-
-    public ListData(Integer id, String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10) {
-        this.id = id;
-        this.field1 = field1;
-        this.field2 = field2;
-        this.field3 = field3;
-        this.field4 = field4;
-        this.field5 = field5;
-        this.field6 = field6;
-        this.field7 = field7;
-        this.field8 = field8;
-        this.field9 = field9;
-        this.field10 = field10;
     }
 
     public Integer getId() {

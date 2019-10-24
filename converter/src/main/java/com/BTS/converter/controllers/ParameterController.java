@@ -17,8 +17,10 @@ import org.springframework.stereotype.Controller;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -26,32 +28,47 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class ParameterController {
+
     @Autowired
     ParameterService paramService;
-    
+
+
     @Autowired
     HttpServletRequest request;
-    
-    Methods method;
-    
-    @RequestMapping("/parameter")
-    public String getAll(Model model, DetailData detaildata) {
-        model.addAttribute("parameters", paramService.getAll());
 
-        return "###";
+    Methods methods = new Methods();
+
+
+    @RequestMapping("/parameter")
+    public String getAll(Model model, Parameter parameter) {
+        model.addAttribute("parameters", paramService.getAll());
+        return "parameter";
     }
 
     @PostMapping("/paramSave")
-    public String save(Model model, BindingResult bindingResult) {
-        String simbol = request.getParameter("###");
-        
+    public String save(@Valid Parameter parameter, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("parameters", paramService.getAll());
+
+           redirectAttributes.addFlashAttribute("status", "gagal disimpan");
+
         }
 
-        model.addAttribute("parameters", paramService.getAll());
+        String symbol = request.getParameter("symbol");
         
-        method.saveParam(simbol);
+        paramService.save(methods.saveParam(symbol));
+        redirectAttributes.addFlashAttribute("status", "berhasil disimpan");
+        return "redirect:/parameter";
+    }
+    
+    @GetMapping("/paramDelete")
+    public String delete(int id,RedirectAttributes redirectAttributes){
+        try {
+            paramService.delete(id);
+            redirectAttributes.addFlashAttribute("status", "berhasil dihapus");
+        } catch (Exception e) {
+            e.getStackTrace();
+            redirectAttributes.addFlashAttribute("status", "gagal dihapus");
+        }
         return "redirect:/parameter";
     }
 }

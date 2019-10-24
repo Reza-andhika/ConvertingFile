@@ -31,6 +31,9 @@ public class TypeService {
             return false;
         }
     }
+    public void delete(String id){
+        typeRepo.deleteById(id);
+    }
     
     public CorporateType getById(String id){
         return typeRepo.findById(id).get();

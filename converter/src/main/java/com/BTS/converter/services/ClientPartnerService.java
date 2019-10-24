@@ -32,6 +32,6 @@ public class ClientPartnerService {
     }
     
     public ClientPartner getById(String id){
-        return clientRepo.findById(id).get();
+        return clientRepo.getById(id);
     }
 }

@@ -38,22 +38,22 @@ public class HistoryFile implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 35)
+    @Size(min = 1, max = 100)
     @Column(name = "id")
     private String id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 35)
+    @Size(min = 1, max = 100)
     @Column(name = "old_path")
     private String oldPath;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 35)
+    @Size(min = 1, max = 100)
     @Column(name = "new_path")
     private String newPath;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 35)
+    @Size(min = 1, max = 100)
     @Column(name = "new_filename")
     private String newFilename;
     @JoinColumn(name = "client", referencedColumnName = "id")

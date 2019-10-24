@@ -10,6 +10,7 @@ import com.BTS.converter.entities.Parameter;
 import com.BTS.converter.repositories.ParameterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -30,6 +31,10 @@ public class ParameterService {
         } else {
             return false;
         }
+    }
+    
+     public void delete(@RequestParam("id")int id){
+        paramRepo.deleteById(id);
     }
     
     public Parameter getById(String id){

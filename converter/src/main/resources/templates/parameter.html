@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>converter</title>
+        <title>add parameter</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Font Awesome -->
@@ -74,6 +74,32 @@
     </head>
 
     <body class="fixed-sn" th:attr="onload='alertSave(\''+${status}+'\')'">
+        <div id="myModal" class="modal fade" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4  class="modal-title">Add symbol</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+
+                        <!--Buka Form-->
+                        <form action="#" th:action="@{/paramSave}" th:object="${parameter}" method="POST">
+                            <div class="form-row">
+                                <div class="form-group ">
+                                    <label for="inputDelimiter">Delimiter</label>
+                                    <input type="text" class="form-control" required th:field="*{symbol}" id="symbol" name="symbol" placeholder="" value="">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success">simpan</button>
+                            </div>
+                        </form>
+                        <!--Close Form Input-->
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="d-flex  " id="wrapper">
             <!-- Sidebar -->
@@ -99,48 +125,40 @@
             <!-- Page Content -->
             <div id="page-content-wrapper">
                 <nav class="navbar navbar-expand-lg  bg-dark border-bottom  navbar-dark bg-dark sticky-top">
+                    <!--button trigger-->
                     <button class="btn btn-light" id="menu-toggle"><i class="fas fa-bars"></i></button>
-
-                </nav>
+                 </nav>
+                <br>
                 <br>
                 <div class="container">
                     <div class="card ">
                         <div class="card-body">                          
                             <br>
                             <!-- fill content -->
-                            <!--Buka Form-->
-                            <!--from bellom jalan-->
-                            <form action="#" th:action="@{/convert}" method="GET" >
-                                <div class="form-row">
-                                    <div class="form-group col-md-4">
-                                        <label for="inputInstansi">Client</label>
-                                        <select class="form-group" required id="client" name="client"/>
-                                        <option value="">-Pilih-</option>
-                                        <option th:each="t : ${clients}" th:value="${t.id}" th:text="${t.name}"></option>
-                                        </select>
-                                    </div>
-<!--                                    <div class="form-group col-md-4">
-                                        <label for="inputInstansi">Client</label>
-                                        <select class="form-control" required th:field="*{client}" id="client" name="client"/>
-                                        <option value="">-Pilih-</option>
-                                        <option th:each="t : ${clients}" th:value="${t.id}" th:text="${t.name}"></option>
-                                        </select>
-                                    </div>-->
 
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-success">Convert</button>
-                                </div>
-                            </form>
-                                <!--Close Form Input-->
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="container">
-                    <div class="card ">
-                        <div class="card-body"> 
+                            <div>
+                                <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#myModal"><i class="fas fa-plus"></i> add Parameter
 
+                                </button>
+                            </div>
+
+                            <br>
+                            <table border="1" id="myTable" class="table table-hover table-sm table-bordered" style="width:100%">
+                                <thead class="thead-dark">
+                                    <tr class="text-center">
+                                        <!--<th>ID</th>-->
+                                        <th>symbol</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="as : ${parameters}" class="text-center">                        
+                                        <!--<td th:text="${as.id}"></td>-->
+                                        <td th:text="${as.symbol}"></td>
+                                        <td><a type="button" class="btn btn-danger" th:href="@{/paramDelete(id=${as.id})}" ><i class="fas fa-trash"></i></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -150,6 +168,14 @@
         </div>
         <!-- Footer -->
 
+        <footer class="page-footer font-small bg-light">
+
+            <!-- Copyright -->
+            <div class="footer-copyright text-center py-1">© 2019 Copyright:
+                BST
+            </div>
+            <!-- Copyright -->
+        </footer>
 
 
         <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
@@ -160,57 +186,37 @@
         <!-- Menu Toggle Script -->
         <script>
             $("#menu-toggle").click(function (e) {
-            e.preventDefault();
-            $("#wrapper").toggleClass("toggled");
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
             });
         </script>
         <script>
             $(document).ready(function () {
-            $('#myTable').DataTable();
-            });
-            
-            $(document).ready(function() {
-            $('.js-example-basic-multiple').select2();
+                $('#myTable').DataTable();
             });
         </script>
-        <script type="text/javascript">
-            //select boxes
-            
-            //delete alert
-            function setDeleteAlert(id) {
-            swal({
-            title: "Apakah Anda Yakin?",
-                    text: "Tekan Ok, Jika Anda Yakin Untuk Menghapus Data!",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-            }).then((willDelete) => {
-            if (willDelete) {
-            window.location.href = "@/clnDelete(id=${id});
-            }
-            else {
-            swal("Anda Membatalkan Mengahpus Data!");
-            }
-            });
-            }
 
+        <script th:inline="javascript">
+            var show = [[${status
+            }
+            ]];
+            if (show == 'berhasil dihapus') {
+                swal("Good job!", show, "success");
+            } else if (show == 'gagal dihapus') {
+                swal("Oops!", show, "error");
+            }
+            
         </script>
         <script th:inline="javascript">
-            var show = [[${status}]];
-            if (show == 'berhasil') {
-            swal("Good job!", show, "success");
-            } else if (show == 'gagal') {
-            swal("Oops!", show, "error");
+            var show = [[${status
+            }
+            ]];
+            if (show == 'berhasil disimpan') {
+                swal("Good job!", show, "success");
+            } else if (show == 'gagal disimpan') {
+                swal("Oops!", show, "error");
             }
         </script>
     </body>
-    <footer class="page-footer font-small bg-light">
-
-        <!-- Copyright -->
-        <div class="footer-copyright text-center py-">© 2019 Copyright:
-            BST
-        </div>
-        <!-- Copyright -->
-    </footer>
 </html>
 

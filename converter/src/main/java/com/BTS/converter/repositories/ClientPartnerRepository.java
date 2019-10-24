@@ -15,5 +15,5 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface ClientPartnerRepository extends CrudRepository<ClientPartner, String>{
     @Query(value = "select * from tb_m_client_partner where id=?1", nativeQuery = true)
-    public String getById(String id);
+    public ClientPartner getById(String id);
 }

@@ -17,6 +17,13 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface HistoryFileRepository extends CrudRepository<HistoryFile, String>{
-    @Query(value="select * from tb_m_history_file where old_filename=?1", nativeQuery = true)
+    @Query(value="select * from tb_m_history_file where new_filename=?1", nativeQuery = true)
     public HistoryFile getByFilename(String filename);
+    
+    @Query(value = "select max(count+1) from tb_m_history_file where client=?1",nativeQuery = true)
+    public Integer loopCount(String client);
+    
+    @Query(value="select * from tb_m_history_file where client=?1", nativeQuery = true)
+    public HistoryFile getByClient(String client);
+    
 }

@@ -36,15 +36,7 @@ public class HistoryFileService {
         return historyRepo.findById(filename).get();
     }
     
-    public boolean getByFilename(String OldFilename){
-        boolean hasil = false;
-        if(historyRepo.getByFilename(OldFilename).equals("")){
-            hasil = true;
-        }
-        else{
-            System.out.println("File sudah digunakan");
-            hasil = false;
-        }
-        return hasil;
+    public HistoryFile getByClient(String id){
+        return historyRepo.getByClient(id);
     }
 }

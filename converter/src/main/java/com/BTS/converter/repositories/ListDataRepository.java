@@ -20,4 +20,8 @@ import org.springframework.stereotype.Repository;
 public interface ListDataRepository extends CrudRepository<ListData, Integer>{
     @Query(value="select * from tb_tr_list_data where client=?1",nativeQuery = true)
     public List<ListData> getByClient(String client);
+    
+    @Query(value="select max(id+1) from tb_tr_list_data",nativeQuery = true)
+    public Integer loopId();
+
 }
